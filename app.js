@@ -20,6 +20,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(express.static(__dirname + '/public'));
+///SERVER DISPLAY STUFF
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+
+// use res.render to load up an ejs view file
+
 pg.connect('postgres://localhost/openteach', function(err, client, done) {
   client.query('CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY, username VARCHAR NOT NULL UNIQUE, email VARCHAR NOT NULL UNIQUE, password VARCHAR NOT NULL, firstname VARCHAR NOT NULL, lastname VARCHAR NOT NULL, lat DECIMAL, lng DECIMAL);' +
     'CREATE TABLE IF NOT EXISTS skills(id SERIAL PRIMARY KEY, name VARCHAR NOT NULL UNIQUE);' +
@@ -58,10 +65,6 @@ pg.connect('postgres://localhost/openteach', function(err, client, done) {
     res.redirect('/login');
   }
 
-  app.get('/', function(req, res) {
-    res.send('working');
-  });
-
   app.get('/login', function(req, res) {
     //
   });
@@ -73,6 +76,16 @@ pg.connect('postgres://localhost/openteach', function(err, client, done) {
       res.json(result.rows);
       done();
     });
+  });
+
+  // index page
+  app.get('/', function(req, res) {
+      res.render('pages/index');
+  });
+
+  // about page
+  app.get('/about', function(req, res) {
+      res.render('pages/about');
   });
 
   app.listen(8000, function() {
