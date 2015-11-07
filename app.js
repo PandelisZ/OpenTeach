@@ -59,6 +59,20 @@ pg.connect('postgres://localhost/openteach', function(err, client, done) {
     }
   ));
 
+  passport.use('register', new LocalStrategy(
+    function(req, username, password, cb) {
+      client.query('INSERT INTO users(username, email, password, firstname, lastname, lat, lng) VALUES ($1, $2, crypt($3, gen_salt(\'bf\')), $4, $5, $6, $7)', [username, req.param('email'), password, req.param('firstname'), req.param('lastname'), req.param('lat'), req.param('lng')], function(err, result) {
+        if(!err) {
+          return cb(null, result.rows[0]);
+        } else {
+          return done(null, false, { message: 'Error making user.' });
+        }
+
+        done();
+      });
+    }
+  ));
+
   var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
       return next();
