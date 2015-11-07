@@ -21,6 +21,7 @@
   "homepage": "https://github.com/PandelisZ/OpenTeach#readme",
   "dependencies": {
     "express": "^4.13.3",
-    "pg": "^4.4.3"
+    "pg": "^4.4.3",
+    "ejs": "~2.3.4"
   }
 }
