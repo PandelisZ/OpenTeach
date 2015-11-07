@@ -1,0 +1,5 @@
+USER(userID, userName, userEmail, userFirstName, userSurname, userEtc, userEtc2)
+SKILL(skillID, skillName, skillDescription)
+USERSKILLS (userSkillID, userID, skillID)
+
+-	N.B. Italics denotes use of a foreign key
