@@ -27,7 +27,7 @@ app.set('view engine', 'ejs');
 
 // use res.render to load up an ejs view file
 
-pg.connect('postgres://droidpantelas:openteach456gto@openteach.c16qq5m1cpxq.eu-west-1.rds.amazonaws.com/openteach', function(err, client, done) {
+pg.connect('postgres://droidpantelas:openteach@openteach.c16qq5m1cpxq.eu-west-1.rds.amazonaws.com/openteach', function(err, client, done) {
   client.query('CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY, username VARCHAR NOT NULL UNIQUE, email VARCHAR NOT NULL UNIQUE, password VARCHAR NOT NULL, firstname VARCHAR NOT NULL, lastname VARCHAR NOT NULL, lat DECIMAL, lng DECIMAL);' +
     'CREATE TABLE IF NOT EXISTS skills(id SERIAL PRIMARY KEY, name VARCHAR NOT NULL UNIQUE);' +
     'CREATE TABLE IF NOT EXISTS userskills(id SERIAL, userid INT NOT NULL, skillid INT NOT NULL);',
@@ -100,6 +100,11 @@ pg.connect('postgres://droidpantelas:openteach456gto@openteach.c16qq5m1cpxq.eu-w
   // about page
   app.get('/about', function(req, res) {
       res.render('pages/about');
+  });
+
+  // skills page
+  app.get('/skills', function(req, res) {
+      res.render('pages/skills');
   });
 
   //var appEnv = cfenv.getAppEnv();
