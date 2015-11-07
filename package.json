@@ -21,7 +21,12 @@
   },
   "homepage": "https://github.com/PandelisZ/OpenTeach#readme",
   "dependencies": {
+    "body-parser": "^1.14.1",
+    "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
+    "express-session": "^1.12.1",
+    "passport": "^0.3.0",
+    "passport-local": "^1.0.0",
     "pg": "^4.4.3",
     "ejs": "~2.3.4",
     "cfenv": "1.0.x"
