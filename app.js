@@ -1,8 +1,8 @@
 var express = require('express');
 var app = express();
-
-var pg = require('pg');
-
+//var cfenv = require('cfenv');
+//var pg = require('pg');\
+/*
 pg.connect('postgres://openteach:openteach@localhost/openteach', function(err, client, done) {
   client.query('CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY, username VARCHAR NOT NULL UNIQUE, email VARCHAR NOT NULL UNIQUE, password VARCHAR NOT NULL, firstname VARCHAR NOT NULL, lastname VARCHAR NOT NULL);' +
     'CREATE TABLE IF NOT EXISTS skills(id SERIAL PRIMARY KEY, name VARCHAR NOT NULL UNIQUE);' +
@@ -10,8 +10,7 @@ pg.connect('postgres://openteach:openteach@localhost/openteach', function(err, c
   function(err, result) {
     done();
   })
-});
-
+}); */
 
 app.use(express.static(__dirname + '/public'));
 ///SERVER DISPLAY STUFF
@@ -30,6 +29,14 @@ app.get('/about', function(req, res) {
     res.render('pages/about');
 });
 
-app.listen(8000, function() {
-  console.log('listening on port 8000');
+//var appEnv = cfenv.getAppEnv();
+
+var server_port = process.env.VCAP_APP_PORT || 8000;
+var server_host = process.env.VCAP_APP_HOST || "localhost";
+
+// start server on the specified port and binding host
+app.listen(server_port, server_host, function() {
+
+	// print a message when the server starts listening
+  //console.log("server starting on " + server_port);
 });

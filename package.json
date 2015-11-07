@@ -4,6 +4,7 @@
   "description": "Open talent network",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +23,7 @@
   "dependencies": {
     "express": "^4.13.3",
     "pg": "^4.4.3",
-    "ejs": "~2.3.4"
+    "ejs": "~2.3.4",
+    "cfenv": "1.0.x"
   }
 }
