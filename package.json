@@ -1,0 +1,26 @@
+{
+  "name": "open-teach",
+  "version": "0.0.1",
+  "description": "Open talent network",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PandelisZ/OpenTeach.git"
+  },
+  "keywords": [
+    "OpenTeach"
+  ],
+  "author": "PandelisZ",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PandelisZ/OpenTeach/issues"
+  },
+  "homepage": "https://github.com/PandelisZ/OpenTeach#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "pg": "^4.4.3"
+  }
+}
