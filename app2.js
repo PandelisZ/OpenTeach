@@ -1,18 +1,6 @@
 var express = require('express');
 var app = express();
-<<<<<<< HEAD
-//var cfenv = require('cfenv');
-//var pg = require('pg');\
-/*
-pg.connect('postgres://openteach:openteach@localhost/openteach', function(err, client, done) {
-  client.query('CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY, username VARCHAR NOT NULL UNIQUE, email VARCHAR NOT NULL UNIQUE, password VARCHAR NOT NULL, firstname VARCHAR NOT NULL, lastname VARCHAR NOT NULL);' +
-    'CREATE TABLE IF NOT EXISTS skills(id SERIAL PRIMARY KEY, name VARCHAR NOT NULL UNIQUE);' +
-    'CREATE TABLE IF NOT EXISTS userskills(id SERIAL, userid INT NOT NULL, skillid INT NOT NULL);',
-  function(err, result) {
-    done();
-  })
-}); */
-=======
+
 
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
@@ -32,7 +20,6 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
->>>>>>> b91defd98c028c4fdce90cb8bb59ddf25293c0d8
 
 app.use(express.static(__dirname + '/public'));
 ///SERVER DISPLAY STUFF
@@ -41,7 +28,7 @@ app.set('view engine', 'ejs');
 
 // use res.render to load up an ejs view file
 
-pg.connect('postgres://localhost/openteach', function(err, client, done) {
+pg.connect('postgres://droidpantelas:openteach456gto@openteach.c16qq5m1cpxq.eu-west-1.rds.amazonaws.com/openteach', function(err, client, done) {
   client.query('CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY, username VARCHAR NOT NULL UNIQUE, email VARCHAR NOT NULL UNIQUE, password VARCHAR NOT NULL, firstname VARCHAR NOT NULL, lastname VARCHAR NOT NULL, lat DECIMAL, lng DECIMAL);' +
     'CREATE TABLE IF NOT EXISTS skills(id SERIAL PRIMARY KEY, name VARCHAR NOT NULL UNIQUE);' +
     'CREATE TABLE IF NOT EXISTS userskills(id SERIAL, userid INT NOT NULL, skillid INT NOT NULL);',
@@ -102,7 +89,6 @@ pg.connect('postgres://localhost/openteach', function(err, client, done) {
       res.render('pages/about');
   });
 
-<<<<<<< HEAD
 //var appEnv = cfenv.getAppEnv();
 
 var server_port = process.env.VCAP_APP_PORT || 8000;
@@ -111,11 +97,4 @@ var server_host = process.env.VCAP_APP_HOST || "localhost";
 // start server on the specified port and binding host
 app.listen(server_port, server_host, function() {
 
-	// print a message when the server starts listening
-  //console.log("server starting on " + server_port);
-=======
-  app.listen(8000, function() {
-    console.log('listening');
-  });
->>>>>>> b91defd98c028c4fdce90cb8bb59ddf25293c0d8
 });
