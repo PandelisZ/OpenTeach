@@ -22,7 +22,7 @@ function initialize() {
 
   marker.setMap(map);*/
 
-  map.addListener('bounds_changed', function(e) {
+  map.addListener('dragend', function() {
 
     var ne = map.getBounds().getNorthEast();
     var sw = map.getBounds().getSouthWest();
@@ -31,9 +31,9 @@ function initialize() {
     var lngmin = sw.lng();
     var lngmax = ne.lng();
 
-    markers.forEach(function(marker) {
+    /*markers.forEach(function(marker) {
       marker.setMap(null);
-    });
+    });*/
 
     $.post('/points', {
       latmin: latmin,

@@ -28,12 +28,10 @@ app.set('view engine', 'ejs');
 // use res.render to load up an ejs view file
 
 pg.connect('postgres://droidpantelas:openteach@openteach.c16qq5m1cpxq.eu-west-1.rds.amazonaws.com/openteach', function(err, client, done) {
-  console.log(err)
   client.query('CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY, username VARCHAR NOT NULL UNIQUE, email VARCHAR NOT NULL UNIQUE, password VARCHAR NOT NULL, firstname VARCHAR NOT NULL, lastname VARCHAR NOT NULL, lat DECIMAL, lng DECIMAL);' +
     'CREATE TABLE IF NOT EXISTS skills(id SERIAL PRIMARY KEY, name VARCHAR NOT NULL UNIQUE);' +
     'CREATE TABLE IF NOT EXISTS userskills(id SERIAL, userid INT NOT NULL, skillid INT NOT NULL);',
   function(err, result) {
-    console.log(err)
     done();
   });
 
@@ -67,8 +65,6 @@ pg.connect('postgres://droidpantelas:openteach@openteach.c16qq5m1cpxq.eu-west-1.
       function(req, username, password, cb) {
         console.log(req.body.lastname);
         client.query('INSERT INTO users(username, email, password, firstname, lastname, lat, lng) VALUES ($1, $2, crypt($3, gen_salt(\'bf\')), $4, $5, $6::DECIMAL, $7::DECIMAL)', [username, req.body.email, password, req.body.firstname, req.body.lastname, req.body.lat, req.body.lng], function(err, result) {
-          done();
-
           if(!err) {
             console.log('success');
             client.query('SELECT * FROM users WHERE username = $1', [username], function(err, result) {
@@ -97,9 +93,7 @@ pg.connect('postgres://droidpantelas:openteach@openteach.c16qq5m1cpxq.eu-west-1.
   app.post('/login', passport.authenticate('login', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }));
 
   app.post('/points', function(req, res) {
-    console.log(req.body.latmin, req.body.latmax, req.body.lngmin, req.body.lngmax);
     client.query('SELECT * FROM users WHERE lat >= $1::decimal AND lat <= $2::decimal AND lng >= $3::decimal AND lng <= $4::decimal', [req.body.latmin, req.body.latmax, req.body.lngmin, req.body.lngmax], function(err, result) {
-      console.log(result);
       res.json(result.rows);
       done();
     });
