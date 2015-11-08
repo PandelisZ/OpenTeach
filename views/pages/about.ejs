@@ -48,6 +48,7 @@ function initialize() {
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
+
 </script>
 </head>
 <body class="container">
@@ -61,10 +62,14 @@ google.maps.event.addDomListener(window, 'load', initialize);
             <div class="col-sm-8">
 
                 <div class="jumbotron">
-                    <h1>This is great</h1>
-                    <p>Welcome to templating using EJS</p>
-
-                    <div id="googleMap" style="width:500px;height:380px;"></div>
+                    <h1>Find Talent Near You</h1>
+                    <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Search for...">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">Go!</button>
+                          </span>
+                        </div><!-- /input-group -->
+                    <div id="googleMap" style="width:100%;height:380px;"></div>
 
 
                 </div>
@@ -79,7 +84,6 @@ google.maps.event.addDomListener(window, 'load', initialize);
             </div>
         </div>
     </main>
-
     <footer>
         <% include ../partials/footer %>
     </footer>
