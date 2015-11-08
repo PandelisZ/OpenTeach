@@ -5,6 +5,64 @@
 <head>
     <% include ../partials/head %>
 </head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="http://maps.googleapis.com/maps/api/js"></script>
+<script>
+var markers = [];
+function initialize() {
+var mapProp = {
+center:new google.maps.LatLng(52.48624,	-1.89040),
+zoom:10,
+mapTypeId:google.maps.MapTypeId.ROADMAP
+};
+var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
+
+/*var marker=new google.maps.Marker({
+position:myCenter,
+});
+
+marker.setMap(map);*/
+
+map.addListener('dragend', function() {
+
+var ne = map.getBounds().getNorthEast();
+var sw = map.getBounds().getSouthWest();
+var latmin = sw.lat();
+var latmax = ne.lat();
+var lngmin = sw.lng();
+var lngmax = ne.lng();
+
+/*markers.forEach(function(marker) {
+  marker.setMap(null);
+});*/
+
+$.post('/points', {
+  latmin: latmin,
+  latmax: latmax,
+  lngmin: lngmin,
+  lngmax: lngmax
+}, function(data) {
+  data.forEach(function(point) {
+    var marker = new google.maps.Marker({
+      position: { lat: Number(point.lat), lng: Number(point.lng) },
+      map: map,
+      title: (point.firstname + ' ' + point.lastname)
+    });
+    var infowindow = new google.maps.InfoWindow({
+      content: '<h1>' + point.firstname + ' ' + point.lastname + '</h1>'
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
+    });
+    markers.push(marker);
+  });
+});
+});
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+</script>
 <body class="container">
 
     <header>
@@ -13,6 +71,8 @@
 
     <main>
         <div class="jumbotron">
+          <div class="row">
+          <div class="col-sm-6">
             <h1>Pandelis Zembashis</h1>
             <ul class="list-groupn list-inline">
               <li class="list-group-item">Python</li>
@@ -21,8 +81,15 @@
               <li class="list-group-item">Unity</li>
               <li class="list-group-item">git</li>
             </ul>
-            <p></p>
-
+            <p>I have experience teaching at workshops with ages from 17 - 20. I ran a game design workshop at my previous college teaching Unity and c#. I currently run workshops at Birmingham City University within the Computer Science society on Python and game development. I have helped out at previous hour of code events held at my college unofficially. I have experience with JavaScript, python, java, c#. I can speak English and Greek fluently.</p>
+          </div>
+          <div class="col-sm-6">
+            <div id="googleMap" style="width:100%;height:400px;"></div>
+            <div class="row">
+            <i class="fa fa-twitter-square fa-5x"></i><i class="fa fa-linkedin-square fa-5x"></i><i class="fa fa-laptop fa-5x"></i>
+            <div>
+          </div>
+        </div>
 
         </div>
     </main>
