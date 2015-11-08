@@ -12,11 +12,14 @@ var markers = [];
 function initialize() {
 var mapProp = {
 center:new google.maps.LatLng(52.48624,	-1.89040),
-zoom:10,
+zoom:14,
 mapTypeId:google.maps.MapTypeId.ROADMAP
 };
+
+
 var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
+map.set('styles', [{"featureType":"all","elementType":"all","stylers":[{"hue":"#ee3424"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.government","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"on"}]}]);
 /*var marker=new google.maps.Marker({
 position:myCenter,
 });
@@ -44,7 +47,7 @@ $.post('/points', {
 }, function(data) {
   data.forEach(function(point) {
     var marker = new google.maps.Marker({
-      position: { lat: Number(point.lat), lng: Number(point.lng) },
+      position: { lat: '52.4832861', lng: '-1.883485' },
       map: map,
       title: (point.firstname + ' ' + point.lastname)
     });
@@ -70,23 +73,24 @@ google.maps.event.addDomListener(window, 'load', initialize);
     </header>
 
     <main>
+      <div class="progress">
+        <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 50%">
+          <span class="">Education</span>
+        </div>
+        <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 30%">
+          <span class="">Libraries</span>
+        </div>
+        <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: 20%">
+          <span class="">Politics</span>
+        </div>
+      </div>
         <div class="jumbotron">
 
           <div class="row">
           <div class="col-sm-6">
-            <h1>Pandelis Zembashis</h1>
+            <img style="width:150px; padding: 10px; float:left; -webkit-border-radius: 50%;" src="https://pbs.twimg.com/profile_images/603852483077742592/TM6CFtaR_400x400.jpg"> <h1>Pandelis Zembashis</h1>
 
-            <div class="progress">
-              <div class="progress-bar progress-bar-success progress-bar-striped" style="width: 50%">
-                <span class="">Education</span>
-              </div>
-              <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 30%">
-                <span class="">Libraries</span>
-              </div>
-              <div class="progress-bar progress-bar-danger progress-bar-striped" style="width: 20%">
-                <span class="">Politics</span>
-              </div>
-            </div>
+<i><h3>Computer Science Student at BCU</h3></i>
 
             <ul class="list-groupn list-inline">
               <li class="list-group-item">Python</li>
@@ -99,8 +103,14 @@ google.maps.event.addDomListener(window, 'load', initialize);
           </div>
           <div class="col-sm-6">
             <div id="googleMap" style="width:100%;height:400px;"></div>
-            <div class="row">
-            <i class="fa fa-twitter-square fa-5x"></i><i class="fa fa-linkedin-square fa-5x"></i><i class="fa fa-laptop fa-5x"></i>
+            <div class="row text-center pagination-centered" style="padding-top: 10px;">
+              <ul class="list-groupn list-inline">
+                <li class="list-group-item">Twitter</li>
+                <li class="list-group-item">Facebook</li>
+                <li class="list-group-item">LinkedIn</li>
+                <li class="list-group-item">Instagram</li>
+                <li class="list-group-item">pandelis.me</li>
+              </ul>
             <div>
           </div>
         </div>
