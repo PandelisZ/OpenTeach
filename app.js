@@ -103,7 +103,7 @@ pg.connect('postgres://droidpantelas:openteach@openteach.c16qq5m1cpxq.eu-west-1.
   });
 
   // skills page
-  app.get('/skills', function(req, res) {
+  app.get('/skills', isAuthenticated, function(req, res) {
       res.render('pages/skills');
   });
 
