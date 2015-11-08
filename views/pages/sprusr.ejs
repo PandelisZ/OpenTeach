@@ -8,63 +8,31 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="http://maps.googleapis.com/maps/api/js"></script>
 <script>
-var markers = [];
 function initialize() {
-var mapProp = {
-center:new google.maps.LatLng(52.48624,	-1.89040),
-zoom:14,
-mapTypeId:google.maps.MapTypeId.ROADMAP
-};
+  var mapProp = {
+    center: new google.maps.LatLng(51.2340,	-0.3318),
+    zoom:14,
+    mapTypeId:google.maps.MapTypeId.ROADMAP
+  };
 
+  var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
+  map.set('styles', [{"featureType":"all","elementType":"all","stylers":[{"hue":"#ee3424"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.government","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"on"}]}]);
 
-map.set('styles', [{"featureType":"all","elementType":"all","stylers":[{"hue":"#ee3424"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.government","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"on"}]}]);
-/*var marker=new google.maps.Marker({
-position:myCenter,
-});
-
-marker.setMap(map);*/
-
-map.addListener('dragend', function() {
-
-var ne = map.getBounds().getNorthEast();
-var sw = map.getBounds().getSouthWest();
-var latmin = sw.lat();
-var latmax = ne.lat();
-var lngmin = sw.lng();
-var lngmax = ne.lng();
-
-/*markers.forEach(function(marker) {
-  marker.setMap(null);
-});*/
-
-$.post('/points', {
-  latmin: latmin,
-  latmax: latmax,
-  lngmin: lngmin,
-  lngmax: lngmax
-}, function(data) {
-  data.forEach(function(point) {
-    var marker = new google.maps.Marker({
-      position: { lat: '52.4832861', lng: '-1.883485' },
-      map: map,
-      title: (point.firstname + ' ' + point.lastname)
-    });
-    var infowindow = new google.maps.InfoWindow({
-      content: '<h1>' + point.firstname + ' ' + point.lastname + '</h1>'
-    });
-    marker.addListener('click', function() {
-      infowindow.open(map, marker);
-    });
-    markers.push(marker);
+  var marker = new google.maps.Marker({
+    position: { lat: 51.2340, lng: -0.3318 },
+    map: map,
+    title: 'Scott Street'
   });
-});
-});
+  var infowindow = new google.maps.InfoWindow({
+    content: '<h1>Scott Street</h1>'
+  });
+  marker.addListener('click', function() {
+    infowindow.open(map, marker);
+  });
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
-
 </script>
 <body class="container">
 

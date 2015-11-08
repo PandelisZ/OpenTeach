@@ -27,7 +27,7 @@ app.set('view engine', 'ejs');
 
 // use res.render to load up an ejs view file
 
-/*pg.connect('postgres://droidpantelas:openteach@openteach.c16qq5m1cpxq.eu-west-1.rds.amazonaws.com/openteach', function(err, client, done) {
+pg.connect('postgres://droidpantelas:openteach@openteach.c16qq5m1cpxq.eu-west-1.rds.amazonaws.com/openteach', function(err, client, done) {
   client.query('CREATE TABLE IF NOT EXISTS users(id SERIAL PRIMARY KEY, username VARCHAR NOT NULL UNIQUE, email VARCHAR NOT NULL UNIQUE, password VARCHAR NOT NULL, firstname VARCHAR NOT NULL, lastname VARCHAR NOT NULL, lat DECIMAL, lng DECIMAL, bio VARCHAR, organization VARCHAR);' +
     'CREATE TABLE IF NOT EXISTS skills(id SERIAL PRIMARY KEY, name VARCHAR NOT NULL UNIQUE);' +
     'CREATE TABLE IF NOT EXISTS userskills(id SERIAL, userid INT NOT NULL, skillid INT NOT NULL);',
@@ -84,26 +84,26 @@ app.set('view engine', 'ejs');
     if (req.isAuthenticated())
       return next();
     res.redirect('/login');
-  }*/
+  }
 
   app.get('/login', function(req, res) {
     res.render('pages/login')
   });
 
-  //app.post('/login', passport.authenticate('login', { successRedirect: '/', failureRedirect: '/login' }));
+  app.post('/login', passport.authenticate('login', { successRedirect: '/', failureRedirect: '/login' }));
 
   app.get('/register', function(req, res) {
     res.render('pages/register')
   });
 
-  //app.post('/register', passport.authenticate('register', { successRedirect: '/', failureRedirect: '/register' }));
+  app.post('/register', passport.authenticate('register', { successRedirect: '/', failureRedirect: '/register' }));
 
-  /*app.post('/points', function(req, res) {
+  app.post('/points', function(req, res) {
     client.query('SELECT * FROM users WHERE lat >= $1::decimal AND lat <= $2::decimal AND lng >= $3::decimal AND lng <= $4::decimal', [req.body.latmin, req.body.latmax, req.body.lngmin, req.body.lngmax], function(err, result) {
       res.json(result.rows);
       done();
     });
-  });*/
+  });
 
   // index page
   app.get('/', function(req, res) {
@@ -123,11 +123,11 @@ app.set('view engine', 'ejs');
   });
 
   // skills page
-  /*app.get('/skills', isAuthenticated, function(req, res) {
+  app.get('/skills', isAuthenticated, function(req, res) {
       res.render('pages/skills');
-  });*/
+  });
   //var appEnv = cfenv.getAppEnv();
-//});
+});
   var server_port = process.env.VCAP_APP_PORT || 8000;
   var server_host = process.env.VCAP_APP_HOST || "localhost";
 
