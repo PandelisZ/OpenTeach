@@ -114,9 +114,15 @@ app.set('view engine', 'ejs');
       res.render('pages/pandelis');
   });
 
-  app.get('/profile/sprusr', function(req, res) {
-      res.render('pages/sprusr');
-  });
+    app.get('/profile/sprusr', function(req, res) {
+        res.render('pages/sprusr');
+    });
+
+    app.get('/profile/nattyxd', function(req, res) {
+        res.render('pages/nattyxd');
+    });
+
+
   // about page
   app.get('/about', function(req, res) {
       res.render('pages/about');
