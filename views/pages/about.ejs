@@ -4,6 +4,7 @@
 <html lang="en">
 <head>
     <% include ../partials/head %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js"></script>
     <script>
 function initialize() {
@@ -14,14 +15,37 @@ function initialize() {
   };
   var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-  var marker=new google.maps.Marker({
+  /*var marker=new google.maps.Marker({
     position:myCenter,
     });
 
-  marker.setMap(map);
+  marker.setMap(map);*/
 
+  map.addListener('bounds_changed', function(e) {
+
+    var ne = map.getBounds().getNorthEast();
+    var sw = map.getBounds().getSouthWest();
+    var latmin = sw.lat();
+    var latmax = ne.lat();
+    var lngmin = sw.lng();
+    var lngmax = ne.lng();
+
+    $.post('/points', {
+      latmin: latmin,
+      latmax: latmax,
+      lngmin: lngmin,
+      lngmax: lngmax
+    }, function(data) {
+      data.forEach(function(point) {
+        var marker = new google.maps.Marker({
+          position: { lat: Number(point.lat), lng: Number(point.lng) },
+          map: map,
+          title: (point.firstname + ' ' + point.lastname)
+        });
+      });
+    });
+  });
 }
-
 
 google.maps.event.addDomListener(window, 'load', initialize);
 </script>

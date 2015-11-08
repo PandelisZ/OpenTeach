@@ -102,8 +102,10 @@ pg.connect('postgres://droidpantelas:openteach@openteach.c16qq5m1cpxq.eu-west-1.
 
   app.post('/register', passport.authenticate('register', { successRedirect: '/', failureRedirect: '/register' }));
 
-  app.post('/points', isAuthenticated, function(req, res) {
-    client.query('SELECT * FROM users WHERE lat >= $1::decimal AND lat <= $2::decimal AND lng >= $3::decimal AND lng <= $4::decimal', [req.params.latmin, req.params.latmax, req.params.lngmin, req.params.lngmax], function(err, result) {
+  app.post('/points', function(req, res) {
+    console.log(req.body.latmin, req.body.latmax, req.body.lngmin, req.body.lngmax);
+    client.query('SELECT * FROM users WHERE lat >= $1::decimal AND lat <= $2::decimal AND lng >= $3::decimal AND lng <= $4::decimal', [req.body.latmin, req.body.latmax, req.body.lngmin, req.body.lngmax], function(err, result) {
+      console.log(result);
       res.json(result.rows);
       done();
     });
