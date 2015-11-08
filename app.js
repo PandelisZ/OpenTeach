@@ -37,13 +37,15 @@ pg.connect('postgres://droidpantelas:openteach@openteach.c16qq5m1cpxq.eu-west-1.
     done();
   });
 
-  passport.serializeUser(function(user, done) {
-    done(null, user.id);
+  passport.serializeUser(function(user, cb) {
+    cb(null, user.id);
+    done();
   });
 
-  passport.deserializeUser(function(id, done) {
+  passport.deserializeUser(function(id, cb) {
     client.query('SELECT * FROM users WHERE id = $1', [id], function(err, result) {
-      done(err, result.rows[0]);
+      cb(err, result.rows[0]);
+      done();
     })
   });
 
@@ -51,9 +53,9 @@ pg.connect('postgres://droidpantelas:openteach@openteach.c16qq5m1cpxq.eu-west-1.
     function(username, password, cb) {
       client.query('SELECT * FROM users WHERE password is NOT NULL AND password = crypt($1, password) AND username = $2', [password, username], function(err, result) {
         if(result.rows.length > 0) {
-          return cb(null, result.rows[0]);
+          cb(null, result.rows[0]);
         } else {
-          return cb(null, false, { message: 'Incorrect username/password.' });
+          cb(null, false, { message: 'Incorrect username/password.' });
         }
 
         done();
@@ -61,19 +63,26 @@ pg.connect('postgres://droidpantelas:openteach@openteach.c16qq5m1cpxq.eu-west-1.
     }
   ));
 
-  passport.use('register', new LocalStrategy(
-    function(req, username, password, cb) {
-      client.query('INSERT INTO users(username, email, password, firstname, lastname, lat, lng) VALUES ($1, $2, crypt($3, gen_salt(\'bf\')), $4, $5, $6, $7)', [username, req.param('email'), password, req.param('firstname'), req.param('lastname'), req.param('lat'), req.param('lng')], function(err, result) {
-        if(!err) {
-          return cb(null, result.rows[0]);
-        } else {
-          return done(null, false, { message: 'Error making user.' });
-        }
+  passport.use('register', new LocalStrategy({ passReqToCallback: true },
+      function(req, username, password, cb) {
+        console.log(req.body.lastname);
+        client.query('INSERT INTO users(username, email, password, firstname, lastname, lat, lng) VALUES ($1, $2, crypt($3, gen_salt(\'bf\')), $4, $5, $6::DECIMAL, $7::DECIMAL)', [username, req.body.email, password, req.body.firstname, req.body.lastname, req.body.lat, req.body.lng], function(err, result) {
+          done();
 
-        done();
-      });
-    }
-  ));
+          if(!err) {
+            console.log('success');
+            client.query('SELECT * FROM users WHERE username = $1', [username], function(err, result) {
+              console.log(result.rows[0]);
+              cb(null, result.rows[0]);
+            });
+          } else {
+            console.log(err);
+            cb(null, false, { message: 'Error making user.' });
+          }
+          done();
+        });
+      }
+    ));
 
   var isAuthenticated = function (req, res, next) {
     if (req.isAuthenticated())
@@ -82,13 +91,15 @@ pg.connect('postgres://droidpantelas:openteach@openteach.c16qq5m1cpxq.eu-west-1.
   }
 
   app.get('/login', function(req, res) {
-    //
+    res.render('pages/login')
   });
 
   app.post('/login', passport.authenticate('login', { successRedirect: '/', failureRedirect: '/login', failureFlash: true }));
 
-  app.post('/points', isAuthenticated, function(req, res) {
-    client.query('SELECT * FROM users WHERE lat >= $1::decimal AND lat <= $2::decimal AND lng >= $3::decimal AND lng <= $4::decimal', [req.params.latmin, req.params.latmax, req.params.lngmin, req.params.lngmax], function(err, result) {
+  app.post('/points', function(req, res) {
+    console.log(req.body.latmin, req.body.latmax, req.body.lngmin, req.body.lngmax);
+    client.query('SELECT * FROM users WHERE lat >= $1::decimal AND lat <= $2::decimal AND lng >= $3::decimal AND lng <= $4::decimal', [req.body.latmin, req.body.latmax, req.body.lngmin, req.body.lngmax], function(err, result) {
+      console.log(result);
       res.json(result.rows);
       done();
     });
@@ -99,7 +110,7 @@ pg.connect('postgres://droidpantelas:openteach@openteach.c16qq5m1cpxq.eu-west-1.
       res.render('pages/index');
   });
 
-  app.get('/', function(req, res) {
+  app.get('/profile', function(req, res) {
       res.render('pages/profile');
   });
   // about page
