@@ -7,62 +7,54 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="http://maps.googleapis.com/maps/api/js"></script>
     <script>
-var markers = [];
-function initialize() {
-  var mapProp = {
-    center:new google.maps.LatLng(52.48624,	-1.89040),
-    zoom:10,
-    mapTypeId:google.maps.MapTypeId.ROADMAP
-  };
-  var map=new google.maps.Map(document.getElementById("googleMap"), mapProp);
+    function initialize() {
+      var mapProp = {
+        center: new google.maps.LatLng(52.4832861,	-1.883485),
+        zoom:11,
+        mapTypeId:google.maps.MapTypeId.ROADMAP
+      };
 
-  /*var marker=new google.maps.Marker({
-    position:myCenter,
-    });
+      var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-  marker.setMap(map);*/
-  map.set('styles', [{"featureType":"all","elementType":"all","stylers":[{"hue":"#ee3424"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.government","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"on"}]}]);
+      map.set('styles', [{"featureType":"all","elementType":"all","stylers":[{"hue":"#ee3424"}]},{"featureType":"poi","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.attraction","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.business","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"poi.government","elementType":"all","stylers":[{"visibility":"off"}]},{"featureType":"transit","elementType":"all","stylers":[{"visibility":"on"}]}]);
 
-  map.addListener('dragend', function() {
-
-    var ne = map.getBounds().getNorthEast();
-    var sw = map.getBounds().getSouthWest();
-    var latmin = sw.lat();
-    var latmax = ne.lat();
-    var lngmin = sw.lng();
-    var lngmax = ne.lng();
-
-    /*markers.forEach(function(marker) {
-      marker.setMap(null);
-    });*/
-
-    $.post('/points', {
-      latmin: latmin,
-      latmax: latmax,
-      lngmin: lngmin,
-      lngmax: lngmax
-    }, function(data) {
-      data.forEach(function(point) {
-        var marker = new google.maps.Marker({
-          position: { lat: Number(point.lat), lng: Number(point.lng) },
-          map: map,
-          title: (point.firstname + ' ' + point.lastname)
-        });
-        var infowindow = new google.maps.InfoWindow({
-          content: '<h1>' + point.firstname + ' ' + point.lastname + '</h1>'
-        });
-        marker.addListener('click', function() {
-          infowindow.open(map, marker);
-        });
-        markers.push(marker);
+      var marker1 = new google.maps.Marker({
+        position: { lat: 52.4832861, lng: -1.883485 },
+        map: map,
+        title: 'Pandelis Zembashis'
       });
-    });
-  });
-}
+      var infowindow1 = new google.maps.InfoWindow({
+        content: '<h3>Pandelis Zembashis</h3><h5>Computer Science Student at BCU</h5><a href="/profile/pandelis">View profile</a>'
+      });
+      marker1.addListener('click', function() {
+        infowindow1.open(map, marker1);
+      });
+      var marker2 = new google.maps.Marker({
+        position: { lat: 52.4932861, lng: -1.863485 },
+        map: map,
+        title: 'Scott Street'
+      });
+      var infowindow2 = new google.maps.InfoWindow({
+        content: '<h3>Scott Street</h3><h5>Computer Science Student at Aston</h5><a href="/profile/sprusr">View profile</a>'
+      });
+      marker2.addListener('click', function() {
+        infowindow2.open(map, marker2);
+      });
+      var marker3 = new google.maps.Marker({
+        position: { lat: 52.459697, lng: -1.957926 },
+        map: map,
+        title: 'Nat Baulch-Jones'
+      });
+      var infowindow3 = new google.maps.InfoWindow({
+        content: '<h3>Nat Baulch-Jones</h3><h5>Computer Science Student at Aston</h5><a href="/profile/nattyxd">View profile</a>'
+      });
+      marker3.addListener('click', function() {
+        infowindow3.open(map, marker3);
+      });
+    }
 
-google.maps.event.addDomListener(window, 'load', initialize);
-
-</script>
+    google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
 </head>
 <body class="container">
 
