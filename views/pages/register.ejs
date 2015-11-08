@@ -1,0 +1,34 @@
+<!-- views/pages/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %>
+</head>
+<body class="container">
+
+    <header>
+        <% include ../partials/header %>
+    </header>
+
+    <main>
+        <div class="jumbotron">
+            <form action="" method="post">
+              <input type="text" name="username" placeholder="Username">
+              <input type="text" name="firstname" placeholder="First Name">
+              <input type="text" name="lastname" placeholder="Last Name">
+              <input type="text" name="lat" placeholder="Latitude">
+              <input type="text" name="lng" placeholder="Longitude">
+              <input type="text" name="email" placeholder="Email">
+              <input type="password" name="password" placeholder="Password">
+              <input type="submit" name="name" value="Register">
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <% include ../partials/footer %>
+    </footer>
+
+</body>
+</html>
